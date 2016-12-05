@@ -11,6 +11,7 @@
  - https://github.com/ihorzenich/html5checklist
  - http://codestyle.co/
  - https://css-tricks.com/css-style-guides/
+ - https://github.com/necolas/idiomatic-css/tree/master/translations/ru-RU
 
 [Markdown онлайн редактор](https://stackedit.io/editor)
 
