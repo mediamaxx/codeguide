@@ -7,8 +7,7 @@
 Hey! I'm your first Markdown document in **StackEdit**[^stackedit]. Don't delete me, I'm very helpful! I can be recovered anyway in the **Utils** tab of the <i class="icon-cog"></i> **Settings** dialog.
 
 ----------
-
-## Heading ##
+[TOC]
 
 
 
@@ -22,7 +21,23 @@ HTML
  - Теги и их атрибуты пишутся строчными буквами. Для значений атрибутов всегда используются двойные кавычки.
  - Необязательный закрывающий слеш у одиночных тегов (`<img>`, `<br>` и другие) не ставится.
  - Необязательные закрывающие теги (например, `</li>` или `</body>`) не пропускаются.
-
+ 
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Страница о коте</title>
+  </head>
+  <body>
+    <article class="post">
+      <h1>Красивый кот</h1>
+      <figure class="post-item">
+        <img src="cat.jpg" alt="Изображение кота">
+        <figcaption>Кот красив!</figcaption>
+      </figure>
+    </article>
+  </body>
+</html>
 
 
 #### Валидность
