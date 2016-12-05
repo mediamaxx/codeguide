@@ -3,10 +3,18 @@
 Руководство по стилю кода
 ===================
 
+Источники для дописывания и адаптации под собственные нужды:
+http://codeguide.co/
+https://google.github.io/styleguide/htmlcssguide.xml
+https://github.com/styleguide
+https://github.com/ihorzenich/html5checklist
+http://codestyle.co/
+https://css-tricks.com/css-style-guides/
 
-Hey! I'm your first Markdown document in **StackEdit**[^stackedit]. Don't delete me, I'm very helpful! I can be recovered anyway in the **Utils** tab of the <i class="icon-cog"></i> **Settings** dialog.
+[Markdown онлайн редактор](https://stackedit.io/editor)
 
 ----------
+
 [TOC]
 
 
@@ -21,8 +29,8 @@ HTML
  - Теги и их атрибуты пишутся строчными буквами. Для значений атрибутов всегда используются двойные кавычки.
  - Необязательный закрывающий слеш у одиночных тегов (`<img>`, `<br>` и другие) не ставится.
  - Необязательные закрывающие теги (например, `</li>` или `</body>`) не пропускаются.
- 
- ```
+
+```
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -43,15 +51,139 @@ HTML
 
 
 #### Валидность
+Документ должен проходить проверку на валидность. Для проверки используется [современный валидатор](http://validator.w3.org/nu/).
+
 #### HTML-doctype
-#### Кодировка символов
-#### Подключение стилей
-#### Подключение скриптов
-#### Порядок атрибутов
-#### Логические атрибуты
-#### Подписи полей ввода
-#### Размеры картинок
+В начале страницы обязательно должен быть указан актуальный `doctype`, чтобы браузер отображал её в режиме соответствия стандартам. Это гарантирует, что страница будет выглядеть единообразно во всех современных браузерах.
+
+    <!DOCTYPE html>
+    <html lang="ru">
+      <head>…</head>
+        <body>…</body>
+    </html>
+    
 #### Атрибут языка
+Для элемента `<html>` в атрибуте `lang` должен указываться соответствующий язык документа. Это помогает инструментам синтеза речи определить, какое использовать произношение или системам перевода, какие использовать языковые правила.
+
+    <!DOCTYPE html>
+    <html lang="ru">
+      <head>…</head>
+      <body>…</body>
+    </html>
+
+#### Кодировка символов
+Кодировка символов на странице всегда должна быть явно указана, чтобы обеспечить корректное отображение текста. Кодировка `utf-8` предпочтительна.
+
+    <head>
+      <meta charset="utf-8">
+      <title>Заголовок страницы</title>
+    </head>
+[todo]: дополнить пример
+#### Подключение стилей
+Стилевые файлы с помощью `<link>` подключаются внутри `<head>`. При этом атрибут type для тега `<link>` не указывается, так как его значение text/css устанавливается по умолчанию.
+
+    <!-- Хорошо: стилевой файл подключён в секции head -->
+    <!DOCTYPE html>
+    <html lang="ru">
+      <head>
+        <link rel="stylesheet" href="style.css">
+      </head>
+      <body>…</body>
+    </html>
+    
+    <!-- Плохо: стилевой файл подключён в секции body -->
+    <!DOCTYPE html>
+    <html lang="ru">
+      <head>…</head>
+      <body>
+        <link rel="stylesheet" href="style.css">
+      </body>
+    </html>
+
+#### Подключение скриптов
+Скрипты должны подключаться в самом низу страницы, чтобы при её загрузке не блокировать отображение содержимого.
+
+При подключении скриптов в теге `<script>` атрибут `type` не указывается, так как его значение `text/javascript` устанавливается по умолчанию.
+
+    <!-- Хорошо: скрипт подключается перед </body> -->
+    <!DOCTYPE html>
+    <html lang="ru">
+      <head>…</head>
+      <body>
+        <!-- Содержимое страницы -->
+        <script src="app.js"></script>
+      </body>
+    </html>
+    
+    <!-- Плохо: скрипт подключается в секции <head> -->
+    <!DOCTYPE html>
+    <html lang="ru">
+      <head>
+        <script src="app.js"></script>
+      </head>
+      <body>…</body>
+    </html>
+
+#### Порядок атрибутов
+Атрибут класса у HTML-элементов пишется первым. Единообразное написание помогает легче считывать код и быстрее разбираться в назначении блоков по их классам.
+
+Остальные атрибуты могут быть расставлены в любом порядке, но тоже единообразно для одинаковых элементов.
+
+    <a class="element element-big" id="element" href="/" data-name="element">Ссылка</a>
+    
+    <input class="form-control" type="text" name="test">
+    
+    <img class="pets-picture" src="cats.jpg" alt="Изображение котиков">
+
+#### Логические атрибуты
+Для логических атрибутов (например, `checked`, `disabled`, `required`) значение не указывается, а сами атрибуты указываются последними и в единообразной последовательности во всём документе.
+
+    <!-- checked="checked" необязательно -->
+    <input type="checkbox" required checked>
+    
+    <input type="text" disabled>
+    
+    <select>
+      <option value="1" selected>1</option>
+    </select>
+
+#### Подписи полей ввода
+Для улучшения взаимодействия пользователя с элементами форм, при нажатии на подпись поля, оно должно активироваться. Для этого элемент формы связывается с его описанием с помощью идентификатора и атрибута `for` тега `<label>`.
+
+    <!-- Хорошо: элемент формы radio связан с подписью через идентификатор -->
+    <input type="radio" id="choose">
+    <label for="choose">Радио кнопка</label>
+    
+    <!-- Хорошо: элемент формы radio и подпись обёрнуты в label -->
+    <label>
+      <input type="radio"> Радио кнопка
+    </label>
+    
+    <!-- Плохо: подпись не связана с элементом формы -->
+    <input type="radio" id="choose"> Радио кнопка
+
+#### Размеры картинок
+Изображениям `<img>` должны быть явно заданы с помощью атрибута размеры в пикселях или в процентах. В случае пикселей размерность не нужна.
+
+По возможности изображениям указываются действительные размеры, так как это улучшает производительность отрисовки страницы: браузер не будет перерисовывать страницу в процессе загрузки и отображения изображения.
+
+    <!-- Хорошо: размеры картинке заданы -->
+    <div class="logo-area">
+      <img src="logo.png" alt="" width="300" height="150">
+    </div>
+    
+    <!-- Плохо: размеры картинке заданы в px -->
+    <div class="logo-area">
+      <img src="logo.png" alt="" width="300px" height="150px">
+    </div>
+    
+    <!-- Плохо: размеры картинке не заданы -->
+    <div class="logo-area">
+      <img src="logo.png" alt="">
+    </div>
+[todo]: дописать про обязательный параметр alt
+
+
 
 
 ----------
@@ -59,191 +191,145 @@ HTML
 
 CSS
 -------------------
-
-#### Create a document
-
-
-----------
-
-
-Publication
--------------
-
-Once you are happy with your document, you can publish it on different websites directly from StackEdit. As for now, StackEdit can publish on **Blogger**, **Dropbox**, **Gist**, **GitHub**, **Google Drive**, **Tumblr**, **WordPress** and on any SSH server.
-
-#### <i class="icon-upload"></i> Publish a document
-
-You can publish your document by opening the <i class="icon-upload"></i> **Publish** sub-menu and by choosing a website. In the dialog box, you can choose the publication format:
-
-- Markdown, to publish the Markdown text on a website that can interpret it (**GitHub** for instance),
-- HTML, to publish the document converted into HTML (on a blog for example),
-- Template, to have a full control of the output.
-
-> **Note:** The default template is a simple webpage wrapping your document in HTML format. You can customize it in the **Advanced** tab of the <i class="icon-cog"></i> **Settings** dialog.
-
-#### <i class="icon-upload"></i> Update a publication
-
-After publishing, StackEdit will keep your document linked to that publication which makes it easy for you to update it. Once you have modified your document and you want to update your publication, click on the <i class="icon-upload"></i> button in the navigation bar.
-
-> **Note:** The <i class="icon-upload"></i> button is disabled when your document has not been published yet.
-
-#### <i class="icon-upload"></i> Manage document publication
-
-Since one document can be published on multiple locations, you can list and manage publish locations by clicking <i class="icon-upload"></i> **Manage publication** in the <i class="icon-provider-stackedit"></i> menu panel. This will let you remove publication locations that are associated to your document.
-
-> **Note:** If the file has been removed from the website or the blog, the document will no longer be published on that location.
-
-----------
-
-
-Markdown Extra
---------------------
-
-StackEdit supports **Markdown Extra**, which extends **Markdown** syntax with some nice features.
-
-> **Tip:** You can disable any **Markdown Extra** feature in the **Extensions** tab of the <i class="icon-cog"></i> **Settings** dialog.
-
-> **Note:** You can find more information about **Markdown** syntax [here][2] and **Markdown Extra** extension [here][3].
-
-
-### Tables
-
-**Markdown Extra** has a special syntax for tables:
-
-Item     | Value
--------- | ---
-Computer | $1600
-Phone    | $12
-Pipe     | $1
-
-You can specify column alignment with one or two colons:
-
-| Item     | Value | Qty   |
-| :------- | ----: | :---: |
-| Computer | $1600 |  5    |
-| Phone    | $12   |  12   |
-| Pipe     | $1    |  234  |
-
-
-### Definition Lists
-
-**Markdown Extra** has a special syntax for definition lists too:
-
-Term 1
-Term 2
-:   Definition A
-:   Definition B
-
-Term 3
-
-:   Definition C
-
-:   Definition D
-
-	> part of definition D
-
-
-### Fenced code blocks
-
-GitHub's fenced code blocks are also supported with **Highlight.js** syntax highlighting:
-
-```
-// Foo
-var bar = 0;
-```
-
-> **Tip:** To use **Prettify** instead of **Highlight.js**, just configure the **Markdown Extra** extension in the <i class="icon-cog"></i> **Settings** dialog.
-
-> **Note:** You can find more information:
-
-> - about **Prettify** syntax highlighting [here][5],
-> - about **Highlight.js** syntax highlighting [here][6].
-
-
-### Footnotes
-
-You can create footnotes like this[^footnote].
-
-  [^footnote]: Here is the *text* of the **footnote**.
-
-
-### SmartyPants
-
-SmartyPants converts ASCII punctuation characters into "smart" typographic punctuation HTML entities. For example:
-
-|                  | ASCII                        | HTML              |
- ----------------- | ---------------------------- | ------------------
-| Single backticks | `'Isn't this fun?'`            | 'Isn't this fun?' |
-| Quotes           | `"Isn't this fun?"`            | "Isn't this fun?" |
-| Dashes           | `-- is en-dash, --- is em-dash` | -- is en-dash, --- is em-dash |
-
-
-### Table of contents
-
-You can insert a table of contents using the marker `[TOC]`:
-
-[TOC]
-
-
-### MathJax
-
-You can render *LaTeX* mathematical expressions using **MathJax**, as on [math.stackexchange.com][1]:
-
-The *Gamma function* satisfying $\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$ is via the Euler integral
-
-$$
-\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
-$$
-
-> **Tip:** To make sure mathematical expressions are rendered properly on your website, include **MathJax** into your template:
-
-```
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
-```
-
-> **Note:** You can find more information about **LaTeX** mathematical expressions [here][4].
-
-
-### UML diagrams
-
-You can also render sequence diagrams like this:
-
-```sequence
-Alice->Bob: Hello Bob, how are you?
-Note right of Bob: Bob thinks
-Bob-->Alice: I am good thanks!
-```
-
-And flow charts like this:
-
-```flow
-st=>start: Start
-e=>end
-op=>operation: My Operation
-cond=>condition: Yes or No?
-
-st->op->cond
-cond(yes)->e
-cond(no)->op
-```
-
-> **Note:** You can find more information:
-
-> - about **Sequence diagrams** syntax [here][7],
-> - about **Flow charts** syntax [here][8].
-
-### Support StackEdit
-
-[![](https://cdn.monetizejs.com/resources/button-32.png)](https://monetizejs.com/authorize?client_id=ESTHdCYOi18iLhhO&summary=true)
-
-  [^stackedit]: [StackEdit](https://stackedit.io/) is a full-featured, open-source Markdown editor based on PageDown, the Markdown library used by Stack Overflow and the other Stack Exchange sites.
-
-
-  [1]: http://math.stackexchange.com/
-  [2]: http://daringfireball.net/projects/markdown/syntax "Markdown"
-  [3]: https://github.com/jmcmanus/pagedown-extra "Pagedown Extra"
-  [4]: http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
-  [5]: https://code.google.com/p/google-code-prettify/
-  [6]: http://highlightjs.org/
-  [7]: http://bramp.github.io/js-sequence-diagrams/
-  [8]: http://adrai.github.io/flowchart.js/
+#### Синтаксис
+
+ - После значения свойства обязательно ставится точка с запятой.
+ - Для отступов внутри правил используются два пробела. Для правильного форматирования используйте файл .editorconfig в вашем редакторе.
+ - Шестнадцатеричное значение цвета сокращается. Для записи используются строчные буквы. Например: 
+`color: #ebc`
+ - Названия тегов и свойств в правилах пишутся строчными буквами.
+ - Начальный ноль для значений сокращается (например, `.5` вместо `0.5`).
+ - Во всех случаях в стилях используются двойные кавычки. В необязательных случаях кавычки не опускаются.
+ - После двоеточия в правилах ставится один пробел (`top: 10px;`). А перед двоеточием пробел не нужен.
+ - Каждое объявление в правиле пишется на новой строке.
+ - Перед открывающейся фигурной скобкой ставится один пробел. После скобки запись идёт с новой строки:
+    .selector {
+      color: #f5f5f5;
+    }
+
+ - Закрывающая фигурная скобка пишется на новой строке и без отступа. Следующее после этого правило отделяется пустой строкой.
+ - Единицы измерения не пишутся, там где в них нет необходимости. Например, `border: 0`.
+ - Для автоматического применения этих правил используйте файл конфигурации csscomb.json для настройки CSSComb.
+
+    /* Хорошо */
+    .selector,
+    .selector-secondary,
+    .selector[type="text"] {
+      padding: 15px;
+      margin-bottom: 15px;
+      background-color: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 1px 2px #cccccc, inset 0 1px 0 #ffffff;
+    }
+    
+    /* Плохо */
+    .selector, .selector-secondary, .selector[type=text]{
+      padding:15px;
+      margin:0px 0px 15px;
+      background-color:rgba(0,0,0,.5);
+      box-shadow:0px 1px 2px #CCC,inset 0 1px 0 #FFFFFF}
+
+[todo]: добавить ссылки и поправить в примере сокращение цвета и нуля
+#### Порядок свойств
+Объявления логически связанных свойств группируются в следующем порядке:
+
+ 1. Позиционирование
+ 2. Блочная модель
+ 3. Типографика
+ 4. Оформление
+ 5. Анимация
+ 6. Разное
+
+Позиционирование следует первым потому, что оно влияет на положение блоков в потоке документа. Блочная модель идёт следующей, так как она определяет размеры и расположение блоков.
+
+Все остальные объявления, которые изменяют вид внутренних частей блоков и не оказывают влияния на другие блоки, идут в последнюю очередь.
+
+Сгруппированные объявления в правиле отделяются друг от друга пустой строкой.
+
+Порядок объявления подробных правил, таких как `font-size`, `font-family`, `line-height`, должен соответствовать порядку в сокращённой версии правила. В случае совместного использования подробных и сокращённых правил, первой должна идти сокращённая версия.
+
+    .declaration-order {
+      /* Позиционирование */
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+    
+      /* Блочная модель */
+      display: block;
+      float: right;
+      width: 100px;
+      height: 100px;
+      margin: 10px;
+      padding: 10px;
+    
+      /* Типографика */
+      font: normal 13px/1.5 "Arial", sans-serif;
+      font-style: normal;
+      font-size: 13px;
+      line-height: 1.5;
+      font-family: "Arial", sans-serif;
+      text-align: center;
+      color: #333333;
+    
+      /* Оформление */
+      background-color: #f5f5f5;
+      border: 1px solid #e5e5e5;
+      border-radius: 3px;
+      opacity: 1;
+    
+      /* Анимация */
+      transition: color 1s;
+    
+      /* Разное */
+      will-change: auto;
+    }
+
+#### Имена классов
+- Имена классов пишутся строчными буквами, используется дефис (но не знаки нижнего подчёркивания или camelCase). Дефисы служат разделителями во взаимосвязанных классах (например, .button и .button-danger).
+- Имена классов должны быть такими, чтобы по ним можно было быстро понять какому элементу страницы задан класс: избегайте сокращений (единственное исключение — .btn для кнопок), но не делайте их слишком длинными (более трёх слов).
+- Для написания классов используются английские слова и термины. Транслитом названия классов и атрибутов не пишутся.
+
+    /* Хорошо */
+    .alert-danger { … }
+    .tweet .user-picture { … }
+    .button { … }
+    .layout-center { … }
+    
+    /* Плохо */
+    .testElement { … }
+    .t { … }
+    .big_red_button { … }
+    .knopka { … }
+
+[todo]: переписать с учётом применения БЭМ
+
+#### Правило `@import`
+Правило `@import` работает медленнее, чем тег `<link>`. В стилях `@import` не должен использоваться.
+
+    <!-- Хорошо: подключение тегом link -->
+    <link rel="stylesheet" href="module.css">
+    
+    <!-- Плохо -->
+    <style>
+      @import url("module.css");
+    </style>
+
+#### Варианты шрифта
+Альтернативные варианты шрифта и тип семейства указываются в конце перечисления `font-family`.
+
+В случае использования нестандартных шрифтов альтернативный веб-безопасный шрифт и тип семейства указываются, чтобы в случае отсутствия нестандартного шрифта в системе, изменения внешнего вида страницы были минимальны. Альтернативный шрифт должен быть такого же типа, что и нестандартный.
+
+Порядок шрифтов следующий:
+ 1. нестандартный шрифт;
+ 2. веб-безопасный;
+ 3. тип шрифта.
+Список веб-безопасных шрифтов можно посмотреть здесь — [cssfontstack.com](http://www.cssfontstack.com/).
+
+TODO:
+Box-sizing
+Normalize
+X-UA-Compatible" content="IE=edge"
+meta name="viewport" content="width=device-width, initial-scale=1"
+HTML5 Shim and Respond.js
