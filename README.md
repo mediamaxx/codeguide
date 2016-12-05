@@ -4,12 +4,13 @@
 ===================
 
 Источники для дописывания и адаптации под собственные нужды:
-http://codeguide.co/
-https://google.github.io/styleguide/htmlcssguide.xml
-https://github.com/styleguide
-https://github.com/ihorzenich/html5checklist
-http://codestyle.co/
-https://css-tricks.com/css-style-guides/
+
+ - http://codeguide.co/
+ - https://google.github.io/styleguide/htmlcssguide.xml
+ - https://github.com/styleguide
+ - https://github.com/ihorzenich/html5checklist
+ - http://codestyle.co/
+ - https://css-tricks.com/css-style-guides/
 
 [Markdown онлайн редактор](https://stackedit.io/editor)
 
@@ -211,22 +212,22 @@ CSS
  - Единицы измерения не пишутся, там где в них нет необходимости. Например, `border: 0`.
  - Для автоматического применения этих правил используйте файл конфигурации csscomb.json для настройки CSSComb.
 
-    /* Хорошо */
-    .selector,
-    .selector-secondary,
-    .selector[type="text"] {
-      padding: 15px;
-      margin-bottom: 15px;
-      background-color: rgba(0, 0, 0, 0.5);
-      box-shadow: 0 1px 2px #cccccc, inset 0 1px 0 #ffffff;
-    }
-    
-    /* Плохо */
-    .selector, .selector-secondary, .selector[type=text]{
-      padding:15px;
-      margin:0px 0px 15px;
-      background-color:rgba(0,0,0,.5);
-      box-shadow:0px 1px 2px #CCC,inset 0 1px 0 #FFFFFF}
+/* Хорошо */
+.selector,
+.selector-secondary,
+.selector[type="text"] {
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 2px #cccccc, inset 0 1px 0 #ffffff;
+}
+
+/* Плохо */
+.selector, .selector-secondary, .selector[type=text]{
+  padding:15px;
+  margin:0px 0px 15px;
+  background-color:rgba(0,0,0,.5);
+  box-shadow:0px 1px 2px #CCC,inset 0 1px 0 #FFFFFF}
 
 [todo]: добавить ссылки и поправить в примере сокращение цвета и нуля
 #### Порядок свойств
