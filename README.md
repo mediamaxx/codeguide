@@ -204,7 +204,6 @@ CSS
  - После двоеточия в правилах ставится один пробел (`top: 10px;`). А перед двоеточием пробел не нужен.
  - Каждое объявление в правиле пишется на новой строке.
  - Перед открывающейся фигурной скобкой ставится один пробел. После скобки запись идёт с новой строки:
-    
     .selector {
       color: #f5f5f5;
     }
@@ -213,22 +212,21 @@ CSS
  - Единицы измерения не пишутся, там где в них нет необходимости. Например, `border: 0`.
  - Для автоматического применения этих правил используйте файл конфигурации csscomb.json для настройки CSSComb.
 
-	/* Хорошо */
-	.selector,
-	.selector-secondary,
-	.selector[type="text"] {
-	  padding: 15px;
-	  margin-bottom: 15px;
-	  background-color: rgba(0, 0, 0, 0.5);
-	  box-shadow: 0 1px 2px #cccccc, inset 0 1px 0 #ffffff;
-	}
-
-	/* Плохо */
-	.selector, .selector-secondary, .selector[type=text]{
-	  padding:15px;
-	  margin:0px 0px 15px;
-	  background-color:rgba(0,0,0,.5);
-	  box-shadow:0px 1px 2px #CCC,inset 0 1px 0 #FFFFFF}
+    /* Хорошо */
+    .selector,
+    .selector-secondary,
+    .selector[type="text"] {
+      padding: 15px;
+      margin-bottom: 15px;
+      background-color: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 1px 2px #cccccc, inset 0 1px 0 #ffffff;
+    }
+    /* Плохо */
+    .selector, .selector-secondary, .selector[type=text]{
+      padding:15px;
+      margin:0px 0px 15px;
+      background-color:rgba(0,0,0,.5);
+      box-shadow:0px 1px 2px #CCC,inset 0 1px 0 #FFFFFF}
 
 [todo]: добавить ссылки и поправить в примере сокращение цвета и нуля
 #### Порядок свойств
@@ -297,8 +295,7 @@ CSS
     .alert-danger { … }
     .tweet .user-picture { … }
     .button { … }
-    .layout-center { … }
-    
+    .layout-center { … }    
     /* Плохо */
     .testElement { … }
     .t { … }
@@ -330,8 +327,10 @@ CSS
 Список веб-безопасных шрифтов можно посмотреть здесь — [cssfontstack.com](http://www.cssfontstack.com/).
 
 TODO:
-Box-sizing
-Normalize
-X-UA-Compatible" content="IE=edge"
-meta name="viewport" content="width=device-width, initial-scale=1"
-HTML5 Shim and Respond.js
+
+ - Box-sizing 
+ - Normalize 
+ - X-UA-Compatible" content="IE=edge" 
+ - meta name="viewport" content="width=device-width, initial-scale=1" 
+ - HTML5 Shim and Respond.js
+
